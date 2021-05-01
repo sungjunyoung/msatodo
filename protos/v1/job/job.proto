@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package v1.job;
+
+option go_package = "github.com/sungjunyoung/prototodo/protos/v1/job";
+
+service Job {
+
+}
+
+message JobMessage {
+  string job = 1;
+}
