@@ -24,22 +24,23 @@ func NewClient(loader config.Loader) (Client, error) {
 		return nil, err
 	}
 
-	return &client{config: c}, nil
+	conn, err := grpc.Dial(c.ManagerEndpoint, grpc.WithInsecure(), grpc.WithBlock())
+	if err != nil {
+		logrus.Errorf("cannot connect: %v", err)
+		return nil, err
+	}
+
+	return &client{
+		config: c,
+		job:    job.NewJobClient(conn),
+	}, nil
 }
 
 func (c *client) AddJob(name string, doneAt string) (*job.AddJobResponse, error) {
-	conn, err := c.getConnection()
-	if err != nil {
-		return nil, err
-	}
-	defer conn.Close()
-
-	jobClient := job.NewJobClient(conn)
-
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	r, err := jobClient.AddJob(ctx, &job.AddJobRequest{
+	r, err := c.job.AddJob(ctx, &job.AddJobRequest{
 		Job:    name,
 		Email:  c.config.Email,
 		DoneAt: doneAt,
@@ -49,14 +50,4 @@ func (c *client) AddJob(name string, doneAt string) (*job.AddJobResponse, error)
 	}
 
 	return r, nil
-}
-
-func (c *client) getConnection() (*grpc.ClientConn, error) {
-	conn, err := grpc.Dial(c.config.ManagerEndpoint, grpc.WithInsecure(), grpc.WithBlock())
-	if err != nil {
-		logrus.Errorf("cannot connect: %v", err)
-		return nil, err
-	}
-
-	return conn, nil
 }
