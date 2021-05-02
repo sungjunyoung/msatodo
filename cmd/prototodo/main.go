@@ -10,12 +10,10 @@ func main() {
 		Use: "prototodo",
 	}
 
-	client, err := getClientCommand()
-	if err != nil {
-		log.Fatal(err)
-	}
-	root.AddCommand(client)
-
+	root.AddCommand(
+		getClientCommand(),
+		getManagerCommand(),
+	)
 	if err := root.Execute(); err != nil {
 		log.Fatal(err)
 	}
