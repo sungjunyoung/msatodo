@@ -14,14 +14,30 @@ type clientLoader struct {
 	path string
 }
 
-func NewClientLoader(path string) *clientLoader {
+func NewClientLoader(path string) Loader {
 	return &clientLoader{path: path}
 }
 
 func (cl clientLoader) Load(config Config) error {
-	f, err := ioutil.ReadFile(cl.path)
+	return load(cl.path, config)
+}
+
+type managerLoader struct {
+	path string
+}
+
+func NewManagerLoader(path string) Loader {
+	return &managerLoader{path: path}
+}
+
+func (ml managerLoader) Load(config Config) error {
+	return load(ml.path, config)
+}
+
+func load(path string, config Config) error {
+	f, err := ioutil.ReadFile(path)
 	if err != nil {
-		return fmt.Errorf("cannot load config from path %s", cl.path)
+		return fmt.Errorf("cannot load config from path %s", path)
 	}
 
 	if err := yaml.Unmarshal(f, config); err != nil {

@@ -14,7 +14,7 @@ type Client interface {
 }
 
 type client struct {
-	config *config.Client
+	config config.Client
 	job    job.JobClient
 }
 
@@ -26,12 +26,12 @@ func NewClient(loader config.Loader) (Client, error) {
 
 	conn, err := grpc.Dial(c.ManagerEndpoint, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
-		logrus.Errorf("cannot connect: %v", err)
+		logrus.Errorf("cannot connect: %+v", err)
 		return nil, err
 	}
 
 	return &client{
-		config: c,
+		config: *c,
 		job:    job.NewJobClient(conn),
 	}, nil
 }

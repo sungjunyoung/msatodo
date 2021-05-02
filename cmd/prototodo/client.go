@@ -45,7 +45,7 @@ func getClientCommand() *cobra.Command {
 }
 
 func getClient() (client.Client, error) {
-	cli, err := client.NewClient(config.NewClientLoader("/etc/prototodo/config.yml"))
+	cli, err := client.NewClient(config.NewClientLoader("/etc/prototodo/client.yml"))
 	if err != nil {
 		return nil, err
 	}

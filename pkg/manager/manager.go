@@ -2,6 +2,7 @@ package manager
 
 import (
 	"github.com/sirupsen/logrus"
+	"github.com/sungjunyoung/prototodo/pkg/config"
 	"net"
 )
 
@@ -10,20 +11,25 @@ type Manager interface {
 }
 
 type manager struct {
+	config config.Manager
 	server *server
-	port   string
 }
 
-func NewManager() Manager {
-	return &manager{
-		server: newServer(),
-		port:   "2222",
+func NewManager(loader config.Loader) (Manager, error) {
+	c := &config.Manager{}
+	if err := loader.Load(c); err != nil {
+		return nil, err
 	}
+
+	return &manager{
+		config: *c,
+		server: newServer(),
+	}, nil
 }
 
 func (m *manager) Start() error {
-	logrus.Infof("starting manager in port %s", m.port)
-	listener, err := net.Listen("tcp", ":"+m.port)
+	logrus.Infof("starting manager in port %s", m.config.Port)
+	listener, err := net.Listen("tcp", ":"+m.config.Port)
 	if err != nil {
 		return err
 	}

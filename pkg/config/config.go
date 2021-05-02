@@ -3,7 +3,8 @@ package config
 type Type string
 
 const (
-	CLIENT Type = "client"
+	CLIENT  Type = "client"
+	MANAGER Type = "manager"
 )
 
 type Config interface {
@@ -17,4 +18,13 @@ type Client struct {
 
 func (c Client) Type() Type {
 	return CLIENT
+}
+
+type Manager struct {
+	Port          string `yaml:"port"`
+	StoreEndpoint string `yaml:"storeEndpoint"`
+}
+
+func (m Manager) Type() Type {
+	return MANAGER
 }

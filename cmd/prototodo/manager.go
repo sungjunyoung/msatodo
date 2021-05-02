@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/sungjunyoung/prototodo/pkg/config"
 	"github.com/sungjunyoung/prototodo/pkg/manager"
 	"os"
 )
@@ -26,6 +27,10 @@ func getManagerCommand() *cobra.Command {
 }
 
 func getManager() (manager.Manager, error) {
-	mgr := manager.NewManager()
+	mgr, err := manager.NewManager(config.NewManagerLoader("/etc/prototodo/manager.yml"))
+	if err != nil {
+		return nil, err
+	}
+
 	return mgr, nil
 }
