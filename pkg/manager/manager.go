@@ -3,36 +3,39 @@ package manager
 import (
 	"github.com/sirupsen/logrus"
 	"github.com/sungjunyoung/prototodo/pkg/config"
+	"github.com/sungjunyoung/prototodo/pkg/manager/adding"
+	"github.com/sungjunyoung/prototodo/pkg/manager/http/grpc"
 	"net"
 )
 
-type Manager interface {
-	Start() error
+type Manager struct {
+	config *config.Manager
+	grpc   *grpc.Handler
 }
 
-type manager struct {
-	config config.Manager
-	server *server
-}
+func NewManager(loader config.Loader, addingSvc adding.Service) (Manager, error) {
+	mgr := Manager{}
 
-func NewManager(loader config.Loader) (Manager, error) {
-	c := &config.Manager{}
-	if err := loader.Load(c); err != nil {
-		return nil, err
+	cfg := &config.Manager{}
+	if err := loader.Load(cfg); err != nil {
+		return mgr, err
 	}
 
-	return &manager{
-		config: *c,
-		server: newServer(),
+	return Manager{
+		config: cfg,
+		grpc:   grpc.NewHandler(addingSvc),
 	}, nil
 }
 
-func (m *manager) Start() error {
-	logrus.Infof("starting manager in port %s", m.config.Port)
+func (m Manager) ServeGrpc(errCh chan error) {
+	logrus.Infof("starting manager in port %s for grpc", m.config.Port)
 	listener, err := net.Listen("tcp", ":"+m.config.Port)
 	if err != nil {
-		return err
+		errCh <- err
 	}
 
-	return m.server.Serve(listener)
+	err = m.grpc.Serve(listener)
+	if err != nil {
+		errCh <- err
+	}
 }

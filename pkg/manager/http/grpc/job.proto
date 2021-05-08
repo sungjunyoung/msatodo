@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package pkg.manager.http.grpc;
+
+option go_package = "github.com/sungjunyoung/prototodo/pkg/manager/http/grpc";
+
+service Job {
+  rpc AddJob (AddJobRequest) returns (AddJobResponse);
+}
+
+message AddJobRequest {
+  string name = 1;
+  string email = 2;
+  string doneAt = 3;
+}
+
+message AddJobResponse {
+  string id = 1;
+}
