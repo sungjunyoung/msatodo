@@ -6,6 +6,15 @@ option go_package = "github.com/sungjunyoung/prototodo/pkg/manager/http/grpc";
 
 service Job {
   rpc AddJob (AddJobRequest) returns (AddJobResponse);
+  rpc ListJobs (ListJobsRequest) returns (ListJobsResponse);
+}
+
+message JobMessage {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string createdAt = 4;
+  string doneAt = 5;
 }
 
 message AddJobRequest {
@@ -16,4 +25,10 @@ message AddJobRequest {
 
 message AddJobResponse {
   string id = 1;
+}
+
+message ListJobsRequest {}
+
+message ListJobsResponse {
+  repeated JobMessage jobs = 1;
 }

@@ -7,6 +7,7 @@ import (
 	"github.com/sungjunyoung/prototodo/pkg/manager"
 	"github.com/sungjunyoung/prototodo/pkg/manager/adding"
 	"github.com/sungjunyoung/prototodo/pkg/manager/cache"
+	"github.com/sungjunyoung/prototodo/pkg/manager/listing"
 	"os"
 )
 
@@ -41,15 +42,20 @@ func getManagerCommand() *cobra.Command {
 func getManager() (manager.Manager, error) {
 	mgr := manager.Manager{}
 
-	memoryCache := cache.NewMemory()
-	addingSvc := adding.NewService(memoryCache)
-
 	configPath := os.Getenv(managerConfigEnv)
 	if configPath == "" {
 		configPath = defaultManagerConfigPath
 	}
 
-	mgr, err := manager.NewManager(config.NewManagerLoader(configPath), addingSvc)
+	memoryCache := cache.NewMemory()
+	addingSvc := adding.NewService(memoryCache)
+	listingSvc := listing.NewService(memoryCache)
+
+	mgr, err := manager.NewManager(
+		config.NewManagerLoader(configPath),
+		addingSvc,
+		listingSvc,
+	)
 	if err != nil {
 		return mgr, err
 	}

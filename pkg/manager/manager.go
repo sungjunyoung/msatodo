@@ -5,6 +5,7 @@ import (
 	"github.com/sungjunyoung/prototodo/pkg/config"
 	"github.com/sungjunyoung/prototodo/pkg/manager/adding"
 	"github.com/sungjunyoung/prototodo/pkg/manager/http/grpc"
+	"github.com/sungjunyoung/prototodo/pkg/manager/listing"
 	"net"
 )
 
@@ -13,7 +14,10 @@ type Manager struct {
 	grpc   *grpc.Handler
 }
 
-func NewManager(loader config.Loader, addingSvc adding.Service) (Manager, error) {
+func NewManager(
+	loader config.Loader,
+	addingSvc adding.Service,
+	listingSvc listing.Service) (Manager, error) {
 	mgr := Manager{}
 
 	cfg := &config.Manager{}
@@ -23,13 +27,13 @@ func NewManager(loader config.Loader, addingSvc adding.Service) (Manager, error)
 
 	return Manager{
 		config: cfg,
-		grpc:   grpc.NewHandler(addingSvc),
+		grpc:   grpc.NewHandler(addingSvc, listingSvc),
 	}, nil
 }
 
 func (m Manager) ServeGrpc(errCh chan error) {
-	logrus.Infof("starting manager in port %s for grpc", m.config.Port)
-	listener, err := net.Listen("tcp", ":"+m.config.Port)
+	logrus.Infof("starting manager in port %s for grpc", m.config.GrpcPort)
+	listener, err := net.Listen("tcp", ":"+m.config.GrpcPort)
 	if err != nil {
 		errCh <- err
 	}

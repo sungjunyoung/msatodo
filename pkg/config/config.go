@@ -21,7 +21,7 @@ func (c Client) Type() Type {
 }
 
 type Manager struct {
-	Port          string `yaml:"port"`
+	GrpcPort      string `yaml:"grpcPort"`
 	StoreEndpoint string `yaml:"storeEndpoint"`
 }
 
