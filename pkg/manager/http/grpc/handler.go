@@ -4,8 +4,8 @@ import (
 	"context"
 	"github.com/araddon/dateparse"
 	"github.com/sirupsen/logrus"
-	"github.com/sungjunyoung/prototodo/pkg/manager/adding"
-	"github.com/sungjunyoung/prototodo/pkg/manager/listing"
+	"github.com/sungjunyoung/msatodo/pkg/manager/adding"
+	"github.com/sungjunyoung/msatodo/pkg/manager/listing"
 	"google.golang.org/grpc"
 )
 

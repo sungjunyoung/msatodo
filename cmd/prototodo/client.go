@@ -8,7 +8,7 @@ import (
 func getClientCommand() *cobra.Command {
 	root := &cobra.Command{
 		Use:   "client",
-		Short: "Prototodo client to query jobs",
+		Short: "Msatodo client to query jobs",
 	}
 
 	add := &cobra.Command{

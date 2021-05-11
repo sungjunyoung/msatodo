@@ -3,10 +3,10 @@ VERSION ?= test-$(shell git log --pretty=format:'%h' -n 1)
 all: build
 
 build:
-	@go build -ldflags "-s -w" -o prototodo ./cmd/prototodo/*.go
+	@go build -ldflags "-s -w" -o msatodo ./cmd/msatodo/*.go
 
 docker:
-	@docker build -t prototodo:$(VERSION) .
+	@docker build -t msatodo:$(VERSION) .
 
 protoc:
 	@protoc -I=. \

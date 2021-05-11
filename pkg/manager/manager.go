@@ -2,10 +2,10 @@ package manager
 
 import (
 	"github.com/sirupsen/logrus"
-	"github.com/sungjunyoung/prototodo/pkg/config"
-	"github.com/sungjunyoung/prototodo/pkg/manager/adding"
-	"github.com/sungjunyoung/prototodo/pkg/manager/http/grpc"
-	"github.com/sungjunyoung/prototodo/pkg/manager/listing"
+	"github.com/sungjunyoung/msatodo/pkg/config"
+	"github.com/sungjunyoung/msatodo/pkg/manager/adding"
+	"github.com/sungjunyoung/msatodo/pkg/manager/http/grpc"
+	"github.com/sungjunyoung/msatodo/pkg/manager/listing"
 	"net"
 )
 

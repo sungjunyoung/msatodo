@@ -1,7 +1,7 @@
 package listing
 
 import (
-	"github.com/sungjunyoung/prototodo/pkg/manager/cache"
+	"github.com/sungjunyoung/msatodo/pkg/manager/cache"
 )
 
 type Cache interface {

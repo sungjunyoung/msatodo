@@ -7,7 +7,7 @@ import (
 
 func main() {
 	root := &cobra.Command{
-		Use: "prototodo",
+		Use: "msatodo",
 	}
 
 	root.AddCommand(

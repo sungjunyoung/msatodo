@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package pkg.manager.http.grpc;
 
-option go_package = "github.com/sungjunyoung/prototodo/pkg/manager/http/grpc";
+option go_package = "github.com/sungjunyoung/msatodo/pkg/manager/http/grpc";
 
 service Job {
   rpc AddJob (AddJobRequest) returns (AddJobResponse);

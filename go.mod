@@ -1,4 +1,4 @@
-module github.com/sungjunyoung/prototodo
+module github.com/sungjunyoung/msatodo
 
 go 1.16
 

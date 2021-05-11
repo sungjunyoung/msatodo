@@ -1,4 +1,4 @@
-# Prototodo
+# MSA TODO
 
 To-Do List management cli with microservice & grpc
 

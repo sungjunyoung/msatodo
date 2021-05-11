@@ -3,21 +3,21 @@ package main
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/sungjunyoung/prototodo/pkg/config"
-	"github.com/sungjunyoung/prototodo/pkg/manager"
-	"github.com/sungjunyoung/prototodo/pkg/manager/adding"
-	"github.com/sungjunyoung/prototodo/pkg/manager/cache"
-	"github.com/sungjunyoung/prototodo/pkg/manager/listing"
+	"github.com/sungjunyoung/msatodo/pkg/config"
+	"github.com/sungjunyoung/msatodo/pkg/manager"
+	"github.com/sungjunyoung/msatodo/pkg/manager/adding"
+	"github.com/sungjunyoung/msatodo/pkg/manager/cache"
+	"github.com/sungjunyoung/msatodo/pkg/manager/listing"
 	"os"
 )
 
-const managerConfigEnv = "PROTOTODO_MANAGER_CONFIG_PATH"
-const defaultManagerConfigPath = "/etc/prototodo/manager.yml"
+const managerConfigEnv = "MSATODO_MANAGER_CONFIG_PATH"
+const defaultManagerConfigPath = "/etc/msatodo/manager.yml"
 
 func getManagerCommand() *cobra.Command {
 	root := &cobra.Command{
 		Use:   "manager",
-		Short: "Prototodo manager to manage jobs",
+		Short: "Msatodo manager to manage jobs",
 		Run: func(cmd *cobra.Command, args []string) {
 			mgr, err := getManager()
 			if err != nil {

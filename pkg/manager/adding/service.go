@@ -3,7 +3,7 @@ package adding
 import (
 	"github.com/hashicorp/go-uuid"
 	"github.com/sirupsen/logrus"
-	"github.com/sungjunyoung/prototodo/pkg/manager/cache"
+	"github.com/sungjunyoung/msatodo/pkg/manager/cache"
 	"time"
 )
 

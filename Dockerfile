@@ -1,14 +1,14 @@
 FROM golang:1.16-alpine3.12 as builder
 
-WORKDIR $GOPATH/src/github.com/sungjunyoung/prototodo/
+WORKDIR $GOPATH/src/github.com/sungjunyoung/msatodo/
 RUN apk update && apk upgrade && apk add --no-cache alpine-sdk
-COPY . $GOPATH/src/github.com/sungjunyoung/prototodo/
+COPY . $GOPATH/src/github.com/sungjunyoung/msatodo/
 RUN make build
-RUN mv prototodo /
+RUN mv msatodo /
 
 #-------------------------------------------
 
 FROM alpine:3.7
-COPY --from=builder /prototodo /bin/
+COPY --from=builder /msatodo /bin/
 
-ENTRYPOINT ["/bin/prototodo"]
+ENTRYPOINT ["/bin/msatodo"]
